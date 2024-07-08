@@ -29,7 +29,7 @@ const nextButton = document.getElementById('next-btn');
 const submitButton = document.getElementById('submit-btn');
 const restartButton = document.getElementById('restart-btn');
 
-let shuffledQuestions, currentQuestionIndex, score, timer;
+let shuffledQuestions, currentQuestionIndex, score, timer, selectedAnswer;
 
 startButton.addEventListener('click', startGame);
 prevButton.addEventListener('click', showPreviousQuestion);
@@ -84,14 +84,19 @@ function resetState() {
   while (answerButtonsElement.firstChild) {
     answerButtonsElement.removeChild(answerButtonsElement.firstChild);
   }
+  selectedAnswer = null;
 }
 
 function selectAnswer(e) {
+  if (selectedAnswer) return;
+
   const selectedButton = e.target;
+  selectedButton.classList.add('selected');
   const correct = selectedButton.innerText === shuffledQuestions[currentQuestionIndex].answer;
   if (correct) {
     score++;
   }
+  selectedAnswer = selectedButton.innerText;
 }
 
 function showPreviousQuestion() {
